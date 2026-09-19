@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13', '3.14']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install the package and the tools
+        run: python -m pip install --quiet -e '.[dev]'
+
+      - name: Ruff (lint)
+        run: ruff check
+
+      - name: Ruff (format)
+        run: ruff format --check
+
+      - name: Mypy
+        run: mypy
+
+      - name: Pytest
+        run: pytest
+
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Build the sdist and the wheel
+        run: python -m pip install --quiet build twine && python -m build
+
+      - name: Check the package
+        run: twine check dist/*
+
+      - name: Install the wheel in a blank environment
+        run: |
+          python -m venv /tmp/blank
+          /tmp/blank/bin/pip install --quiet dist/*.whl "mypy>=1.20,<1.21"
+          /tmp/blank/bin/python -c "import bitgen; print(bitgen.VERSION)"
+
+      - name: The wheel is typed for its integrators (strict consumer, expected errors caught)
+        run: /tmp/blank/bin/mypy --strict tests/package/consumer.py
+
+      - name: The wheel behaves like the sources (HTTP smoke)
+        run: PYTHONPATH="$PWD" /tmp/blank/bin/python tests/package/smoke.py

@@ -1,0 +1,74 @@
+[build-system]
+# hatchling 1.27 brings PEP 639 (the license expression); 1.32 starts emitting Metadata 2.5 — 2.4 until PyPI is known to take it
+requires = ["hatchling>=1.27,<1.32"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bitgen-sdk"
+dynamic = ["version"]
+description = "Official Python SDK for the BITGEN API v4"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "LicenseRef-Proprietary"
+authors = [{ name = "BITGEN" }]
+keywords = ["bitgen", "crypto", "sdk"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/bitgenplatform/sdk-python"
+Repository = "https://github.com/bitgenplatform/sdk-python"
+Changelog = "https://github.com/bitgenplatform/sdk-python/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4,<9",
+    "mypy>=1.20,<1.21",
+    "ruff>=0.16,<0.17",
+    "build>=1.6,<2",
+    "twine>=7.0,<8",
+]
+
+[tool.hatch.version]
+path = "src/bitgen/version.py"
+
+[tool.hatch.build.targets.sdist]
+only-include = ["src/bitgen", "readme", "README.md", "CHANGELOG.md", "pyproject.toml"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bitgen"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["error"]
+
+[tool.mypy]
+files = ["src", "tests"]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF", "PL", "PERF", "RET", "T20", "S"]
+ignore = ["PLR2004", "PLR0913", "PLR0917"]
+
+[tool.ruff.lint.per-file-ignores]
+# tests: assert is the point, subprocess runs the doc examples and openssl with our own arguments, pickle our own
+# errors, the webhook secrets are fixtures
+"tests/**" = ["T20", "S101", "S603", "S301", "S105"]

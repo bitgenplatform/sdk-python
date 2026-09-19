@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="title">
+  <title id="title">An EUR withdrawal: the reserve on the ledger, the compliance analysis, the wire from the organization account to the customer IBAN, the debit at confirmation</title>
+  <defs>
+    <marker id="md97706" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0.5 L7,4 L0,7.5 z" fill="#d97706"/></marker>
+    <marker id="m7c3aed" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0.5 L7,4 L0,7.5 z" fill="#7c3aed"/></marker>
+    <marker id="m0d9488" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0.5 L7,4 L0,7.5 z" fill="#0d9488"/></marker>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="1" fill="#e2e8f0"/></pattern>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="160%"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.10"/></filter>
+  </defs>
+  <rect width="1000" height="600" fill="#ffffff"/>
+  <rect width="1000" height="600" fill="url(#grid)"/>
+  <line x1="110" y1="48" x2="110" y2="520" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="108" y="21" width="4" height="18" rx="2" fill="#0f172a"/>
+  <text x="120.0" y="34.5" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#0f172a" text-anchor="start">Customer</text>
+  <line x1="370" y1="48" x2="370" y2="520" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="368" y="21" width="4" height="18" rx="2" fill="#d97706"/>
+  <text x="380.0" y="34.5" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#0f172a" text-anchor="start">Bank provider (holds the funds)</text>
+  <line x1="630" y1="48" x2="630" y2="520" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="628" y="21" width="4" height="18" rx="2" fill="#7c3aed"/>
+  <text x="640.0" y="34.5" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#0f172a" text-anchor="start">BITGEN ledger</text>
+  <line x1="870" y1="48" x2="870" y2="520" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="868" y="21" width="4" height="18" rx="2" fill="#0d9488"/>
+  <text x="880.0" y="34.5" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#0f172a" text-anchor="start">Your organization</text>
+  <rect x="867" y="62" width="6" height="108" rx="3" fill="#0d9488"/>
+  <rect x="627" y="62" width="6" height="108" rx="3" fill="#7c3aed"/>
+  <path d="M866,116 H635" fill="none" stroke="#0d9488" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#m0d9488)"/>
+  <rect x="650" y="62" width="200" height="108" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="666.0" y="86.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">Withdraw</text>
+  <text x="666.0" y="106.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">amount</tspan> 50.00 EUR, to the IBAN</text>
+  <text x="666.0" y="123.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">→ <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">200 { transaction }</tspan></text>
+  <text x="666.0" y="140.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">reserved: <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">pending.out</tspan> 50,</text>
+  <text x="666.0" y="157.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">balance</tspan> untouched</text>
+  <rect x="627" y="178" width="6" height="92" rx="3" fill="#7c3aed"/>
+  <rect x="867" y="178" width="6" height="92" rx="3" fill="#0d9488"/>
+  <path d="M634,224 H865" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#m7c3aed)"/>
+  <rect x="650" y="178" width="200" height="92" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="666.0" y="202.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">Compliance analysis</text>
+  <text x="666.0" y="222.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">transaction <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">BANK</tspan> <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">OUT</tspan></text>
+  <text x="666.0" y="239.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">event <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">bank.transaction</tspan>,</text>
+  <text x="666.0" y="256.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">PENDING</tspan> if an alert holds it</text>
+  <rect x="627" y="285" width="6" height="74" rx="3" fill="#7c3aed"/>
+  <rect x="367" y="285" width="6" height="74" rx="3" fill="#d97706"/>
+  <path d="M626,322 H375" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#m7c3aed)"/>
+  <rect x="400" y="285" width="200" height="74" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="416.0" y="309.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">Wire ordered</text>
+  <text x="416.0" y="329.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">from the organization's account</text>
+  <text x="416.0" y="346.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">to the customer's IBAN</text>
+  <rect x="367" y="374" width="6" height="60" rx="3" fill="#d97706"/>
+  <rect x="107" y="374" width="6" height="60" rx="3" fill="#0f172a"/>
+  <path d="M366,404 H115" fill="none" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#md97706)"/>
+  <rect x="140" y="374" width="200" height="60" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="156.0" y="398.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">Wire transfer</text>
+  <text x="156.0" y="418.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">the customer receives <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">net</tspan></text>
+  <rect x="627" y="436" width="6" height="108" rx="3" fill="#7c3aed"/>
+  <rect x="867" y="436" width="6" height="108" rx="3" fill="#0d9488"/>
+  <path d="M634,490 H865" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#m7c3aed)"/>
+  <rect x="650" y="436" width="200" height="108" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="666.0" y="460.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">Debited, at confirmation</text>
+  <text x="666.0" y="480.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">balance</tspan> debited,</text>
+  <text x="666.0" y="497.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">operation <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">WITHDRAWAL</tspan></text>
+  <text x="666.0" y="514.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">event <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">bank.debited</tspan>: <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">amount</tspan>, <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">fee</tspan>, <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">net</tspan></text>
+  <text x="666.0" y="531.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">bank.transaction</tspan> <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">COMPLETED</tspan></text>
+  <text x="500.0" y="566.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="middle" font-style="italic">If it fails, the reserve is released: <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">pending.out</tspan> goes back down.</text>
+</svg>

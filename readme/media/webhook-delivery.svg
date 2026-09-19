@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-labelledby="title">
+  <title id="title">Receiving a webhook delivery: the POST, its verification, the 2xx answer and the retries</title>
+  <defs>
+    <marker id="m0d9488" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0.5 L7,4 L0,7.5 z" fill="#0d9488"/></marker>
+    <marker id="m7c3aed" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0.5 L7,4 L0,7.5 z" fill="#7c3aed"/></marker>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="1" fill="#e2e8f0"/></pattern>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="160%"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.10"/></filter>
+  </defs>
+  <rect width="1000" height="540" fill="#ffffff"/>
+  <rect width="1000" height="540" fill="url(#grid)"/>
+  <text x="500.0" y="34.5" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">Receiving a delivery</text>
+  <line x1="250" y1="48" x2="250" y2="524" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="248" y="21" width="4" height="18" rx="2" fill="#7c3aed"/>
+  <text x="260.0" y="34.5" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#0f172a" text-anchor="start">BITGEN</text>
+  <line x1="750" y1="48" x2="750" y2="524" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="748" y="21" width="4" height="18" rx="2" fill="#0d9488"/>
+  <text x="760.0" y="34.5" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#0f172a" text-anchor="start">Your endpoint</text>
+  <rect x="247" y="82" width="6" height="100" rx="3" fill="#7c3aed"/>
+  <rect x="747" y="82" width="6" height="100" rx="3" fill="#0d9488"/>
+  <path d="M254,132 H745" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#m7c3aed)"/>
+  <rect x="310" y="78" width="380" height="108" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="326.0" y="102.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">POST — the delivery</text>
+  <text x="326.0" y="122.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">Content-Type: application/json</tspan></text>
+  <text x="326.0" y="139.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">X-BITGEN-Timestamp: &lt;epoch seconds&gt;</tspan></text>
+  <text x="326.0" y="156.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">X-BITGEN-Signature: sha256=&lt;hex&gt;</tspan></text>
+  <text x="326.0" y="173.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">{ delivery_id, timestamp, event, data }</tspan></text>
+  <rect x="747" y="204" width="6" height="132" rx="3" fill="#0d9488"/>
+  <rect x="550" y="208" width="400" height="124" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="566.0" y="232.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">Verify the delivery</text>
+  <text x="566.0" y="252.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">1 · Recompute <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">HMAC_SHA256(secret, "&lt;timestamp&gt;.&lt;rawBody&gt;")</tspan></text>
+  <text x="566.0" y="269.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">&#160;&#160;&#160;&#160;on the raw body, with the timestamp of the header</text>
+  <text x="566.0" y="286.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">2 · Compare it with <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">X-BITGEN-Signature</tspan> in constant time</text>
+  <text x="566.0" y="303.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">3 · Reject it when <tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">X-BITGEN-Timestamp</tspan> is more than 300 s away</text>
+  <text x="566.0" y="320.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="start">4 · Only then, parse the body</text>
+  <rect x="247" y="362" width="6" height="36" rx="3" fill="#7c3aed"/>
+  <rect x="747" y="362" width="6" height="36" rx="3" fill="#0d9488"/>
+  <path d="M746,380 H255" fill="none" stroke="#0d9488" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#m0d9488)"/>
+  <rect x="410" y="364" width="180" height="32" rx="10" fill="#dcfce7" stroke="#bbf7d0" filter="url(#shadow)"/>
+  <text x="500.0" y="384.3" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#15803d" text-anchor="middle"><tspan font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="0.92em" font-weight="600">2xx</tspan> — delivered</text>
+  <rect x="247" y="428" width="6" height="68" rx="3" fill="#7c3aed"/>
+  <rect x="747" y="428" width="6" height="68" rx="3" fill="#0d9488"/>
+  <path d="M254,462 H745" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4" marker-end="url(#m7c3aed)"/>
+  <rect x="310" y="428" width="380" height="68" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="326.0" y="452.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">No 2xx: the delivery is retried 4 times</text>
+  <rect x="326" y="466" width="85" height="24" rx="12.0" fill="#f1f5f9"/>
+  <text x="368.0" y="482.1" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#475569" text-anchor="middle">after 60 s</text>
+  <rect x="429" y="466" width="54" height="24" rx="12.0" fill="#f1f5f9"/>
+  <text x="456.0" y="482.1" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#475569" text-anchor="middle">5 min</text>
+  <rect x="504" y="466" width="60" height="24" rx="12.0" fill="#f1f5f9"/>
+  <text x="534.0" y="482.1" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#475569" text-anchor="middle">15 min</text>
+  <rect x="584" y="466" width="41" height="24" rx="12.0" fill="#f1f5f9"/>
+  <text x="604.0" y="482.1" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#475569" text-anchor="middle">1 h</text>
+</svg>
