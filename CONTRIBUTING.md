@@ -20,7 +20,7 @@ No network access is needed once the virtual environment exists: the tests work 
 
 ```bash
 ruff check            # lint, src/ and tests/ — the security rules of bandit (`S`) included
-ruff format --check   # formatting (`ruff format` rewrites)
+ruff format --check   # formatting (`ruff format` rewrites) — the Python examples of the Markdown documentation included
 mypy                  # strict, src/ and tests/
 pytest                # the tests
 python -m build       # the sdist and the wheel, in dist/

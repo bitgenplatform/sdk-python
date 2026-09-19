@@ -67,7 +67,7 @@ client.webhooks.regenerate() -> None
 ```python
 client.webhooks.regenerate()  # 1. a new secret is created — it is not returned
 
-secret = client.webhooks.list().secret  # 2. the new secret — configure your receiving endpoint with it, the previous one stops validating immediately
+secret = client.webhooks.list().secret  # 2. the new secret for your endpoint — the previous one stops validating
 ```
 
 `regenerate()` creates a new secret but does not return it: the API returns the current secret in `list()` (`secret` attribute, next to `endpoint` and the subscriptions). The deliveries are signed with the new one from then on, the previous one stops validating immediately. Before activation, the API answers `404 unknown_webhook_security`. The method returns `None`.
