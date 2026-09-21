@@ -18,7 +18,7 @@ client = BitgenClient(
 | Argument | Description |
 |---|---|
 | `scope` | uuid of the organization that owns the key. Sent as the `BITGEN-Scope` header. It is also the organization the SDK uses wherever the API expects yours. |
-| `apiKey` | The raw key, shown once when it is created. Sent as the `Api-key` header. |
+| `apiKey` | The raw key, shown once when it is created by an administrator of the organization, in the BITGEN interface — never through the API. Sent as the `Api-key` header. |
 
 A missing key, an unknown, revoked or expired key, or a `scope` that is not the key's organization, is refused with a `401` ([Common errors](errors.md#common-errors)).
 

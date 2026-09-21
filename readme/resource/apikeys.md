@@ -1,6 +1,6 @@
 # API keys
 
-An API key belongs to your organization: it is valid until it expires or is revoked, and every call made with it is journaled. `client.apikeys` reads the keys of your organization and the journal of their calls — it is read-only: a key cannot be created through the API, and the SDK does not revoke.
+An API key belongs to your organization: it is valid until it expires or is revoked, and every call made with it is journaled. `client.apikeys` reads the keys of your organization and the journal of their calls — it is read-only: a key is created, configured and revoked by an administrator of the organization, in the BITGEN interface — never through the API, and the SDK does not revoke.
 
 Examples use `client`, a configured `BitgenClient` ([Configuration](../configuration.md)). Wherever the API expects your organization, the SDK sends the `scope` of the client.
 
