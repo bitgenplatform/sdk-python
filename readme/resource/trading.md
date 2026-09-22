@@ -36,7 +36,7 @@ order = client.trading.get(created.tunnel)
 print(order.state, order.received, order.executedPrice)  # DONE 0.0123 2031.5
 ```
 
-The API reserves `amount` on the customer's EUR account (`423 insufficient_funds` if the balance is insufficient, `404 unknown_bank` without an EUR account) and creates the order. Returns an `OrderCreated`: `tunnel`, the uuid of the order, and `state`, its initial state.
+The API reserves `amount` on the customer's EUR account (`423 insufficient_funds` if the balance is insufficient, `404 unknown_bank` without an EUR account) and creates the order. Returns an `OrderCreated`: `tunnel`, the uuid of the order, and `state`, its initial state. On the **sandbox** environment only, purchases are capped per customer and per calendar day — the sandbox buys with test tokens, whose supply is limited: beyond the cap the call answers `429 daily_buy_limit_exceeded`. No such cap exists in production.
 
 ![A purchase: REGISTERED, EXECUTING, FILLED, DELIVERING, DONE — FAILED and PARKED](../media/order-buy.svg)
 
@@ -149,6 +149,7 @@ In addition to the [common errors](../errors.md#common-errors), and the custody 
 | `423` | `insufficient_funds` | `buy`: insufficient EUR balance |
 | `423` | `blocked_by_alert` | An active compliance alert blocks the customer |
 | `423` | `bank_lock_unavailable` | The EUR account is locked by a concurrent operation |
+| `429` | `daily_buy_limit_exceeded` | **Sandbox only** — the daily purchase cap for this customer is reached. Never returned in production |
 
 ## Related
 

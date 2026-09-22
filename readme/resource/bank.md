@@ -11,7 +11,7 @@ Examples use `client`, a configured `BitgenClient` ([Configuration](../configura
 | `get(user)` | Reads the EUR account of a customer — creates it on first read | `BankAccount` |
 | `operations(user, ...)` | Lists the EUR operations of a customer | `Page[BankOperation]` |
 | `withdraw(user, amount, ...)` | Withdraws EUR to the customer's IBAN | `BankWithdrawal` |
-| `credit(amount, ...)` | Declares an EUR deposit received on a manual bank provider (`201`), or taken by a provider that reports it itself (`202`, empty `uuid`) | `Created` |
+| `credit(amount, ...)` | Declares an EUR deposit received on a manual bank provider, or taken by a provider that reports it itself (empty `uuid`) | `Created` |
 
 Models of this resource, under `bitgen.models`: `BankAccount`, `BankPending`, `BankOperation`, `BankWithdrawal`, `Created` — the constant class `BankDirection`, and the shared `History`.
 
@@ -97,7 +97,7 @@ The withdrawal goes to the customer's IBAN: the amount is reserved in `pending.o
 client.bank.credit(amount: str | int | float | Decimal, *, user: UserRef | None = None, message: str | None = None, reference: str | None = None, currency: str | None = None) -> Created
 ```
 
-`credit` only applies when your organization's bank provider is **manual** — deposits are not reported to BITGEN automatically: you tell BITGEN a wire has arrived on the organization's account. The amount enters `pending.in_`, goes through BITGEN's processing and the compliance analysis, and the account is credited then — `bank.credited` at that moment ([Following a deposit and a withdrawal](../concepts.md#following-a-deposit-and-a-withdrawal)). On a provider that **takes the declaration and reports the deposit itself** — the test bank of the sandbox environment — the call answers `202` with an empty body: the incoming movement appears in `pending.in_` a few seconds later, once the provider has reported it, and the `bank.transaction` / `bank.credited` events follow as for any deposit. With an automated provider that refuses declarations, deposits are detected and credited automatically and you are notified by the `bank.credited` webhook — do not call `credit`: the API refuses it (`412 deposit_reported_by_provider`). The account is designated either by the customer (`user`) or by the wire transfer reference of the account (`message`).
+`credit` only applies when your organization's bank provider is **manual** — deposits are not reported to BITGEN automatically: you tell BITGEN a wire has arrived on the organization's account. The amount enters `pending.in_`, goes through BITGEN's processing and the compliance analysis, and the account is credited then — `bank.credited` at that moment ([Following a deposit and a withdrawal](../concepts.md#following-a-deposit-and-a-withdrawal)). On a provider that **takes the declaration and reports the deposit itself** — the test bank of the sandbox environment — the call answers `201` with an empty body, no `uuid`: the incoming movement appears in `pending.in_` a second later, once the provider has reported it, and the `bank.transaction` / `bank.credited` events follow as for any deposit. With an automated provider that refuses declarations, deposits are detected and credited automatically and you are notified by the `bank.credited` webhook — do not call `credit`: the API refuses it (`412 deposit_reported_by_provider`). The account is designated either by the customer (`user`) or by the wire transfer reference of the account (`message`).
 
 | Argument | Type | Description |
 |---|---|---|
@@ -117,7 +117,7 @@ deposit = client.bank.credit(
 print(deposit.uuid)
 ```
 
-Returns a `Created`: the `uuid` of the declared deposit — the incoming movement, not credited yet. On a `202` (provider that reports the deposit itself, see above) `uuid` is `''`. Without `user` nor `message`, the API answers `400 bank_target_required`.
+Returns a `Created`: the `uuid` of the declared deposit — the incoming movement, not credited yet. On a provider that reports the deposit itself (see above) `uuid` is `''`. Without `user` nor `message`, the API answers `400 bank_target_required`.
 
 ![An EUR deposit: the wire to the organization account at the bank provider, its report, the matching by reference, the compliance analysis, the credit of the ledger](../media/deposit-flow.svg)
 

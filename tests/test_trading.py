@@ -143,6 +143,11 @@ def test_list_sends_the_exact_query_and_maps_orders(trading: TradingResource, tr
         (403, "user_not_in_scope", lambda trading: trading.buy("c-1", Asset.ETH, "25.00")),
         (404, "unknown_user", lambda trading: trading.list(user="c-x")),
         (403, "forbidden_permission", lambda trading: trading.list()),
+        (
+            429,
+            "daily_buy_limit_exceeded",
+            lambda trading: trading.buy("c-1", Asset.ETH, "25.00"),
+        ),  # sandbox only: daily purchase cap per customer
     ],
 )
 def test_api_errors_become_bitgen_errors(

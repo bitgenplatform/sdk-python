@@ -1,3 +1,9 @@
+## [1.0.2] - 2026-09-23
+
+### Changed
+- Documentation only, no code change. `readme/resource/bank.md`: `credit()` on a provider that reports the deposit itself answers `201` with an empty body and no `uuid` (it answered `202` before) — `uuid` is `''`, the movement appears in `pending.in_` a second later
+- `readme/resource/trading.md`: new `429 daily_buy_limit_exceeded` on `buy()` — **sandbox only**, purchases are capped per customer and per calendar day because the sandbox buys with test tokens. No such cap exists in production
+
 ## [1.0.0] - 2026-09-19
 
 ### Added
