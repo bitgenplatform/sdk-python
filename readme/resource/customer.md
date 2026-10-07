@@ -20,7 +20,7 @@ Models of this resource, under `bitgen.models`: `Created`, `Customer`, `Customer
 ## Create
 
 ```
-client.customer.create(email: str, manager: str, *, firstname: str | None = None, lastname: str | None = None, fin: str | None = None, needActivation: bool | None = None, notify: bool | None = None, locale: str | None = None, organization: str | None = None) -> Created
+client.customer.create(email: str, manager: str, *, firstname: str | None = None, lastname: str | None = None, fin: str | None = None, needActivation: bool | None = None, notify: bool | None = None, canLogin: bool | None = None, locale: str | None = None, organization: str | None = None) -> Created
 ```
 
 | Argument | Type | Description |
@@ -31,6 +31,7 @@ client.customer.create(email: str, manager: str, *, firstname: str | None = None
 | `fin` | `str \| None` | Tax identification number of the customer — optional, 100 characters max |
 | `needActivation` | `bool \| None` | Default `True`: BITGEN emails the customer an activation link and the account stays `CREATED` (the bank, custody, trading and staking resources do not accept it) until they activate. `False`: the account is usable right away and BITGEN sends no email — for an organization that handles activation and notifications with its own system, or through webhooks |
 | `notify` | `bool \| None` | Default `True`: the customer receives BITGEN's emails (newsletter). `False`: none |
+| `canLogin` | `bool \| None` | Default `True`: the customer may sign in to the BITGEN web application. `False`: they cannot, and the activation answers only their `uuid` instead of a session |
 | `locale` | `str \| None` | `Locale.FR` (default) or `Locale.EN` — anything else is refused before any request |
 | `organization` | `str \| None` | Category: `OrganizationCategory.CUSTOMER` (default) or `OrganizationCategory.B2B` — `B2B` also opens a KYB file. `BUSINESS` is reserved to BITGEN administrators: like any other value, the SDK refuses it before any request |
 
@@ -62,7 +63,7 @@ customer = client.customer.create(
 
 With `needActivation=False` the account is usable right away and BITGEN sends no activation email — for an organization that handles activation and notifications with its own system, or through webhooks; with `notify=False` the customer receives no BITGEN email at all.
 
-When the email already belongs to an active account whose KYC is validated, that account is **attached** to your organization instead of being created. An active account without a validated KYC cannot be attached (`412 user_not_attachable`), an account already attached to another organization is refused (`409 user_already_assigned`), and so is an account still being created, for 15 minutes (`409 account_unavailable`).
+When the email already belongs to an active account whose KYC is validated, that account is **invited** to your organization instead of being created: a pending collaboration appears, a `customer.invitation.create` webhook is sent, and the attachment only takes effect once the person accepts. This holds whatever role you ask for. An active account without a validated KYC cannot be invited (`412 user_not_attachable`), a person who is already a **customer** of another organization is refused (`409 user_already_assigned`) — being an employee elsewhere does not block anything — and so is an account still being created, for 14 days (`409 account_unavailable`).
 
 Returns a `Created`: the `uuid` of the customer — pass it as is to the other resources.
 
@@ -192,8 +193,8 @@ In addition to the [common errors](../errors.md#common-errors):
 | `400` | `invalid_fin` | `fin` (tax identification number) is longer than 100 characters, or not a scalar |
 | `403` | `missing_group_organization_or_manager` | `manager` is missing |
 | `404` | `unknown_user` | Unknown customer (`get`), or unknown `manager` (`list`) |
-| `409` | `user_already_assigned` | The email belongs to an account attached to another organization |
-| `409` | `account_unavailable` | The email belongs to an account still being created (less than 15 minutes ago) |
+| `409` | `user_already_assigned` | The person is already a **customer** of another organization. Being an employee elsewhere does not block anything: only the customer role is exclusive |
+| `409` | `account_unavailable` | The email belongs to an account still being created (less than 14 days ago) |
 | `412` | `user_not_attachable` | The email belongs to an active account without a validated KYC |
 | `422` | `invalid_include_closed` | `includeClosed` is not a boolean value |
 

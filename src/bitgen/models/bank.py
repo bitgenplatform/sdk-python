@@ -95,7 +95,8 @@ class BankOperation:
 
 @dataclass(frozen=True, slots=True)
 class BankWithdrawal:
-    """`client.bank.withdraw()` — the identifier of the transaction created for the withdrawal"""
+    """`client.bank.withdraw()` — the identifier of the withdrawal; its line in the transaction journal is opened by the
+    compliance analysis, within a minute of the call"""
 
     transaction: str
 

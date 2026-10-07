@@ -31,6 +31,8 @@ A missing key, an unknown, revoked or expired key, or a `scope` that is not the 
 
 `Env` holds these names as constants (`Env.VALUES` lists them): pass the constant. Anything else is refused before any request ([Validation](#validation)).
 
+On `sandbox`, two behaviours differ from production. Purchases are capped per customer and per calendar day — the crypto is bought with test tokens, whose supply is limited: beyond the cap `buy()` answers `429 daily_buy_limit_exceeded`. And the bank provider takes the deposit declaration and reports the deposit itself, so `credit()` answers `201` with an empty body and no `uuid`, the incoming movement appearing in `pending.in` a second later. Everything else — the routes, the parameters, the answers and the codes — is identical.
+
 ## Custom host
 
 To reach the API through another hostname — a container, a tunnel — give `host` instead of `env`:

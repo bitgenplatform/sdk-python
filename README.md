@@ -1,4 +1,4 @@
-# bitgen-sdk — v1.0.2
+# bitgen-sdk — v1.0.3
 
 Official Python SDK for the BITGEN API v4 — server-side, Python 3.11+, no dependency beyond the standard library.
 Install it with `pip install bitgen-sdk`.

@@ -138,6 +138,7 @@ In addition to the [common errors](../errors.md#common-errors):
 | `404` | `unknown_organization` | The organization is unknown |
 | `404` | `withdraw_organization_unresolved` | The organization of the withdrawal is unresolved |
 | `409` | `duplicate_withdraw` | Duplicate withdrawal |
+| `409` | `withdraw_replay_mismatch` | Same `idempotencyKey` replayed with a different amount or destination address. An identical replay returns the existing movement, without sending anything on chain |
 | `412` | `custody_not_enabled` | The `CUSTODY` connector of your organization is not enabled |
 | `415` | `custody_portfolio_treasury_unsupported` | `portfolio` on your organization |
 | `415` | `custody_treasury_withdraw_unsupported` | `withdraw` on your organization |

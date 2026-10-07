@@ -123,6 +123,8 @@ def test_withdraw_sends_the_amount_as_a_string_and_the_bank_details_when_given(
     assert transport.last().body == b'{"amount":"12.5","bank":"BNP"}'
     bank.withdraw("c-1", Decimal("19.90"))
     assert transport.last().body == b'{"amount":"19.90"}'
+    bank.withdraw("c-1", 12.5, idempotencyKey="w-42")
+    assert transport.last().body == b'{"amount":"12.5","idempotencyKey":"w-42"}'
 
 
 def test_credit_targets_a_user_or_a_wire_message(bank: BankResource, transport: FakeTransport) -> None:

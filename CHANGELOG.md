@@ -1,3 +1,17 @@
+## [1.0.3] - 2026-10-07
+
+### Added
+- `customer.create()` takes a `canLogin: bool | None` keyword argument (default `True`): `False` creates a customer who cannot sign in to the BITGEN web application — the activation then answers only their `uuid` instead of a session. For an organization that drives everything through the API with its own interface
+- `bank.withdraw()` takes an `idempotencyKey: str | None` keyword argument (64 characters max, unique per customer): an identical replay reserves the amount once and returns the same `transaction`, the same key with a different amount is refused with `412 idempotency_amount_mismatch`, an invalid key with `422 invalid_idempotency_key`. A key identifies one withdrawal for good, a failed one included
+
+### Changed
+- `readme/resource/customer.md`: creating a customer from an email that already has an active, KYC-validated account no longer attaches it immediately — the person is invited and the attachment takes effect when they accept, so the customer is not usable on the financial routes until then. `409 user_already_assigned` now fires only when the person is already a **customer** of another organization
+- `readme/resource/customer.md`: the `409 account_unavailable` window is **14 days**, not 15 minutes — an email belonging to an account still being created is refused for two weeks, the time the person has to answer their invitation
+- `readme/resource/bank.md`: `reference` identifies one deposit and one only — same amount, idempotent; different amount, `412 reference_amount_mismatch`; over 218 characters, `416 reference_too_long`
+- `readme/resource/custody.md`: new `409 withdraw_replay_mismatch` — same `idempotencyKey` replayed with a different amount or destination address. An identical replay still returns the existing movement
+- `readme/resource/bank.md`: the `transaction` returned by `withdraw()` — its line in the journal is opened by the compliance analysis within a minute of the call, so reading the journal before that answers `404 unknown_transaction`. Bank details sent with a withdrawal are written to the account even when the withdrawal is then refused
+- `readme/resource/staking.md`: `stake()` with a customer uuid it cannot use now answers `403 org_forbidden` instead of `404 unknown_user`
+
 ## [1.0.2] - 2026-09-23
 
 ### Changed

@@ -244,7 +244,7 @@ In addition to the [common errors](../errors.md#common-errors), and the custody 
 | `403` | `account_frozen` | The customer's account is frozen |
 | `403` | `kyc_not_validated` | Your organization uses BITGEN's identity verification and the customer's identity is not validated ([Activation and identity](../concepts.md#activation-and-identity)) |
 | `403` | `user_actions_disabled` | Customer actions are disabled for your organization (`user_can_actions` flag) |
-| `404` | `unknown_user` | `stake`: unknown customer; `list`, `movements`: unknown `user` |
+| `404` | `unknown_user` | `list`, `movements`: unknown `user`. **`stake` no longer answers this code**: an unknown customer and a customer outside your organization both answer `403 org_forbidden` |
 | `404` | `unknown_core` | `stake`: unknown `provider` |
 | `404` | `unknown_asset` | Unknown asset |
 | `404` | `unknown_organization` | The organization is unknown |

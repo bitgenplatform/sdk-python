@@ -58,15 +58,17 @@ class BankResource:
         iban: str | None = None,
         bank: str | None = None,
         bic: str | None = None,
+        idempotencyKey: str | None = None,
     ) -> BankWithdrawal:
         """Withdraw EUR (rounded to 2 decimals by the API) to the customer's IBAN — `iban` / `bank` / `bic` update the
-        bank details first"""
+        bank details first, `idempotencyKey` (64 characters max, unique per customer) makes the call safe to replay"""
         body = _compact(
             {
                 "amount": amount_.normalize(amount),
                 "iban": values.optional_string(iban, "iban"),
                 "bank": values.optional_string(bank, "bank"),
                 "bic": values.optional_string(bic, "bic"),
+                "idempotencyKey": values.optional_string(idempotencyKey, "idempotencyKey"),
             }
         )
         return BankWithdrawal.from_dict(_cast.answer(self._http.put(f"/bank/{_user(user)}", body)))

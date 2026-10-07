@@ -71,23 +71,28 @@ Returns a page of `BankOperation`: `txId` (identifier of the ledger entry), `amo
 ## Withdraw
 
 ```
-client.bank.withdraw(user: UserRef, amount: str | int | float | Decimal, *, iban: str | None = None, bank: str | None = None, bic: str | None = None) -> BankWithdrawal
+client.bank.withdraw(user: UserRef, amount: str | int | float | Decimal, *, iban: str | None = None, bank: str | None = None, bic: str | None = None, idempotencyKey: str | None = None) -> BankWithdrawal
 ```
 
 | Argument | Type | Description |
 |---|---|---|
 | `amount` | `str \| int \| float \| Decimal` | EUR, rounded to 2 decimals by the API ([Amounts](../concepts.md#amounts)) |
 | `iban`, `bank`, `bic` | `str \| None` | Optional: update the customer's bank details before the withdrawal |
+| `idempotencyKey` | `str \| None` | Optional: 64 characters max, unique per customer — replaying the same key returns the same withdrawal |
 
 ```python
 withdrawal = client.bank.withdraw(
-    customer, "50.00", iban="FR76…", bic="BNPAFRPP"
-)  # the bank details are optional once set
+    customer, "50.00", iban="FR76…", bic="BNPAFRPP", idempotencyKey="WITHDRAW-REF-42"
+)  # the bank details and the key are optional
 
-print(withdrawal.transaction)  # the uuid of the transaction created for the withdrawal
+print(withdrawal.transaction)  # the identifier of the withdrawal
 ```
 
-The withdrawal goes to the customer's IBAN: the amount is reserved in `pending.out` and debited from the balance when the provider confirms the wire; the event `bank.debited` reports it then, with `amount`, `fee` and `net` — what the customer receives ([Following a deposit and a withdrawal](../concepts.md#following-a-deposit-and-a-withdrawal)). The account must have bank details (`412 bank_rib_required`), a sufficient balance (`416 requested_amount_error`) and an amount above the fee (`416 amount_below_fee`). Returns a `BankWithdrawal`: `transaction`, the identifier of the withdrawal — its `Transaction` in the journal ([Transactions](transaction.md)).
+The withdrawal goes to the customer's IBAN: the amount is reserved in `pending.out` and debited from the balance when the provider confirms the wire; the event `bank.debited` reports it then, with `amount`, `fee` and `net` — what the customer receives ([Following a deposit and a withdrawal](../concepts.md#following-a-deposit-and-a-withdrawal)). The account must have bank details (`412 bank_rib_required`), a sufficient balance (`416 requested_amount_error`) and an amount above the fee (`416 amount_below_fee`). Bank details sent with the call are written to the account even when the withdrawal is then refused.
+
+`idempotencyKey` makes the call safe to replay: the same key with the same amount reserves the amount once and returns the same `transaction`, the same key with a different amount is refused (`412 idempotency_amount_mismatch`), and an invalid key answers `422 invalid_idempotency_key`. A key identifies one withdrawal for good — replayed after the withdrawal has failed, it returns that withdrawal instead of starting a new one.
+
+Returns a `BankWithdrawal`: `transaction`, the identifier of the withdrawal. Its `Transaction` in the journal ([Transactions](transaction.md)) is opened by the compliance analysis, within a minute of the call: reading the journal before that answers `404 unknown_transaction`, and this same identifier reads it once it is opened.
 
 ![An EUR withdrawal: the reserve on the ledger, the compliance analysis, the wire from the organization account to the customer IBAN, the debit at confirmation](../media/withdrawal-flow.svg)
 
@@ -97,14 +102,14 @@ The withdrawal goes to the customer's IBAN: the amount is reserved in `pending.o
 client.bank.credit(amount: str | int | float | Decimal, *, user: UserRef | None = None, message: str | None = None, reference: str | None = None, currency: str | None = None) -> Created
 ```
 
-`credit` only applies when your organization's bank provider is **manual** — deposits are not reported to BITGEN automatically: you tell BITGEN a wire has arrived on the organization's account. The amount enters `pending.in_`, goes through BITGEN's processing and the compliance analysis, and the account is credited then — `bank.credited` at that moment ([Following a deposit and a withdrawal](../concepts.md#following-a-deposit-and-a-withdrawal)). On a provider that **takes the declaration and reports the deposit itself** — the test bank of the sandbox environment — the call answers `201` with an empty body, no `uuid`: the incoming movement appears in `pending.in_` a second later, once the provider has reported it, and the `bank.transaction` / `bank.credited` events follow as for any deposit. With an automated provider that refuses declarations, deposits are detected and credited automatically and you are notified by the `bank.credited` webhook — do not call `credit`: the API refuses it (`412 deposit_reported_by_provider`). The account is designated either by the customer (`user`) or by the wire transfer reference of the account (`message`).
+`credit` only applies when your organization's bank provider is **manual** — deposits are not reported to BITGEN automatically: you tell BITGEN a wire has arrived on the organization's account. The amount enters `pending.in_`, goes through BITGEN's processing and the compliance analysis, and the account is credited then — `bank.credited` at that moment ([Following a deposit and a withdrawal](../concepts.md#following-a-deposit-and-a-withdrawal)). On a provider that **takes the declaration and reports the deposit itself**, the call answers `201` with an empty body, no `uuid`: the incoming movement appears in `pending.in_` a second later, once the provider has reported it, and the `bank.transaction` / `bank.credited` events follow as for any deposit. With an automated provider that refuses declarations, deposits are detected and credited automatically and you are notified by the `bank.credited` webhook — do not call `credit`: the API refuses it (`412 deposit_reported_by_provider`). The account is designated either by the customer (`user`) or by the wire transfer reference of the account (`message`).
 
 | Argument | Type | Description |
 |---|---|---|
 | `amount` | `str \| int \| float \| Decimal` | EUR ([Amounts](../concepts.md#amounts)) |
 | `user` | `UserRef \| None` | The customer, by uuid or by model — or `message` |
 | `message` | `str \| None` | The wire transfer reference of the account (`BTGN…`) — or `user` |
-| `reference` | `str \| None` | The bank's transfer reference — it makes the call idempotent: calling twice with the same reference declares once (and returns the same `uuid`) |
+| `reference` | `str \| None` | The bank's transfer reference — it identifies one deposit and one only. Calling twice with the same reference **and the same amount** declares once and returns the same `uuid`; calling again with a **different amount** is refused (`412 reference_amount_mismatch`). Your references are private to your organization. 218 characters at most |
 | `currency` | `str \| None` | Optional, `EUR` |
 
 ```python
@@ -137,6 +142,8 @@ In addition to the [common errors](../errors.md#common-errors):
 | `412` | `bank_rib_required` | `withdraw` without an IBAN or a bank on the account |
 | `412` | `ramp_not_enabled` | The `RAMP` (bank) connector of your organization is not enabled |
 | `412` | `deposit_reported_by_provider` | `credit` on an automated bank provider that refuses declarations: deposits are reported by the provider itself |
+| `412` | `reference_amount_mismatch` | The same `reference` was already declared for a different amount |
+| `416` | `reference_too_long` | The `reference` is longer than 218 characters |
 | `412` | `trading_not_enabled` | The `TRADING` connector of your organization is not enabled |
 | `416` | `requested_amount_error` | Insufficient balance |
 | `416` | `amount_below_fee` | The amount does not cover the fee |

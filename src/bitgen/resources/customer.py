@@ -29,6 +29,7 @@ class CustomerResource:
         fin: str | None = None,
         needActivation: bool | None = None,
         notify: bool | None = None,
+        canLogin: bool | None = None,
         locale: str | None = None,
         organization: str | None = None,
     ) -> Created:
@@ -49,6 +50,7 @@ class CustomerResource:
                 "fin": values.optional_string(fin, "fin"),
                 "needActivation": values.optional_bool(needActivation, "needActivation"),
                 "notify": values.optional_bool(notify, "notify"),
+                "canLogin": values.optional_bool(canLogin, "canLogin"),
             }
         )
         body = _compact(
