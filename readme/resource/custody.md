@@ -27,7 +27,7 @@ wallets = client.custody.wallets(customer)
 for wallet in wallets:
     print(wallet.asset.iso, wallet.balance, wallet.address)  # ETH 0.5 0xabc…
 
-treasury = client.custody.wallets("YOUR_SCOPE_UUID")  # the treasury wallets of your organization
+treasury = client.custody.wallets("YOUR_ORGANIZATION_SCOPE")  # the treasury wallets of your organization
 ```
 
 Returns a plain list of `Wallet` (a `list[Wallet]`, not a `Page`: the API answers the whole list), without their `history`:

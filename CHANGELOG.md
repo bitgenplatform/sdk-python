@@ -1,3 +1,8 @@
+## [1.0.4] - 2026-10-09
+
+### Changed
+- Documentation: the `scope` placeholder in the examples is now `YOUR_ORGANIZATION_SCOPE` (was `YOUR_SCOPE_UUID`) — the uuid of the organization that owns the key
+
 ## [1.0.3] - 2026-10-07
 
 ### Added

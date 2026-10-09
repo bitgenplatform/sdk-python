@@ -8,7 +8,7 @@ Create the client once, then run a first journey: create a customer, read their 
 from bitgen import BitgenClient, Env
 
 client = BitgenClient(
-    scope="YOUR_SCOPE_UUID",  # uuid of the organization that owns the key
+    scope="YOUR_ORGANIZATION_SCOPE",  # uuid of the organization that owns the key
     apiKey="YOUR_API_KEY",
     env=Env.SANDBOX,  # Env.PRODUCTION by default
 )

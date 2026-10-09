@@ -72,7 +72,7 @@ from bitgen.resources import (
 )
 
 # --- valid usage -------------------------------------------------------------------------------------------------
-client = BitgenClient(scope="YOUR_SCOPE_UUID", apiKey="YOUR_API_KEY", env=Env.SANDBOX, timeout=10)
+client = BitgenClient(scope="YOUR_ORGANIZATION_SCOPE", apiKey="YOUR_API_KEY", env=Env.SANDBOX, timeout=10)
 custom = BitgenClient(scope="s", apiKey="k", host="my-hostname", port=8080, isSsl=False, timeout=0.5)
 environment: str = Env.SANDBOX
 assets: tuple[str, ...] = Asset.VALUES

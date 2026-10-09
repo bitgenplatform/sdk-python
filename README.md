@@ -1,4 +1,4 @@
-# bitgen-sdk — v1.0.3
+# bitgen-sdk — v1.0.4
 
 Official Python SDK for the BITGEN API v4 — server-side, Python 3.11+, no dependency beyond the standard library.
 Install it with `pip install bitgen-sdk`.
@@ -7,7 +7,7 @@ Install it with `pip install bitgen-sdk`.
 from bitgen import BitgenClient, Env
 
 client = BitgenClient(
-    scope="YOUR_SCOPE_UUID",  # uuid of the organization that owns the key
+    scope="YOUR_ORGANIZATION_SCOPE",  # uuid of the organization that owns the key
     apiKey="YOUR_API_KEY",
     env=Env.SANDBOX,  # Env.PRODUCTION by default
 )

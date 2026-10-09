@@ -50,7 +50,7 @@ def prelude(port: int) -> str:
     return (
         "from bitgen import BitgenClient\n"
         "from bitgen.models import Created\n"
-        'client = BitgenClient(scope="YOUR_SCOPE_UUID", apiKey="YOUR_API_KEY", '
+        'client = BitgenClient(scope="YOUR_ORGANIZATION_SCOPE", apiKey="YOUR_API_KEY", '
         f'host="127.0.0.1", port={port}, isSsl=False)\n'
         'customer = Created("CUSTOMER_UUID")\n'
     )

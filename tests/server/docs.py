@@ -197,7 +197,7 @@ CUSTOMER: dict[str, Any] = {
                 "state": "ENABLED",
                 "roles": ["ROLE_USER"],
                 "organization": "ACME",
-                "organizationUuid": "YOUR_SCOPE_UUID",
+                "organizationUuid": "YOUR_ORGANIZATION_SCOPE",
                 "manager": "MANAGER_UUID",
             }
         ],
@@ -286,7 +286,7 @@ def order(
         "completedAt": completedAt,
         "createdAt": 1701000000,
         "user": {"uuid": "CUSTOMER_UUID", "login": "jean@valjean.fr"},
-        "organization": {"uuid": "YOUR_SCOPE_UUID", "name": "ACME"},
+        "organization": {"uuid": "YOUR_ORGANIZATION_SCOPE", "name": "ACME"},
         "asset": asset_ref(item),
     }
 
@@ -304,7 +304,7 @@ OWNER: dict[str, Any] = {
     "login": "jean@valjean.fr",
     "account": {"firstname": "Jean", "lastname": "Valjean", "fin": None},
 }
-ORGANIZATION: dict[str, Any] = {"uuid": "YOUR_SCOPE_UUID", "state": "ENABLED", "name": "ACME", "hub": None}
+ORGANIZATION: dict[str, Any] = {"uuid": "YOUR_ORGANIZATION_SCOPE", "state": "ENABLED", "name": "ACME", "hub": None}
 
 
 def transaction(
@@ -427,7 +427,7 @@ MOVEMENT: dict[str, Any] = {
     },
     "owner": OWNER,
     "asset": asset_ref(ASSETS["sol"]),
-    "organization": {"uuid": "YOUR_SCOPE_UUID", "state": "ENABLED", "name": "ACME"},
+    "organization": {"uuid": "YOUR_ORGANIZATION_SCOPE", "state": "ENABLED", "name": "ACME"},
 }
 STAKING_OPERATIONS: list[dict[str, Any]] = [
     {
@@ -540,7 +540,7 @@ APIKEYS: dict[str, dict[str, Any]] = {
         "expireAt": 1735689600,
         "createdAt": 1699000000,
         "organization": {
-            "uuid": "YOUR_SCOPE_UUID",
+            "uuid": "YOUR_ORGANIZATION_SCOPE",
             "state": "ENABLED",
             "name": "ACME",
             "hub": None,

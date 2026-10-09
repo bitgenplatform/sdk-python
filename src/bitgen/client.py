@@ -31,7 +31,7 @@ class BitgenClient:
     any request is sent.
 
     ```python
-    client = BitgenClient(scope="YOUR_SCOPE_UUID", apiKey="YOUR_API_KEY", env=Env.SANDBOX)
+    client = BitgenClient(scope="YOUR_ORGANIZATION_SCOPE", apiKey="YOUR_API_KEY", env=Env.SANDBOX)
     ```
     """
 
